@@ -8,10 +8,12 @@ public class SoundResource {
 
     private int resource_id;
     private String resource_name;
+    private int icon_id;
 
-    public SoundResource(int resource_id, String resource_name) {
+    public SoundResource(int resource_id, String resource_name, int icon_id) {
         this.resource_id = resource_id;
         this.resource_name = resource_name;
+        this.icon_id = icon_id;
     }
 
     public SoundResource() {
@@ -39,6 +41,14 @@ public class SoundResource {
 
     public void setResource_id(int resource_id) {
         this.resource_id = resource_id;
+    }
+
+    public int getIcon_id() {
+        return icon_id;
+    }
+
+    public void setIcon_id(int icon_id) {
+        this.icon_id = icon_id;
     }
 
     public String getSectionName() {
