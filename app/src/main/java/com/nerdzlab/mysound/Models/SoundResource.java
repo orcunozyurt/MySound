@@ -40,4 +40,30 @@ public class SoundResource {
     public void setResource_id(int resource_id) {
         this.resource_id = resource_id;
     }
+
+    public String getSectionName() {
+        String[] arr = resource_name.split("_");
+
+        String output = arr[0].substring(0, 1).toUpperCase() + arr[0].substring(1);
+
+        return output;
+    }
+
+    public String getCleanName() {
+        String[] arr = resource_name.split("_");
+        String clean_name="";
+
+        int i = 0;
+        for ( String ss : arr) {
+
+            if(i != 0 )
+            {
+                clean_name += ss + " ";
+            }
+            i++;
+        }
+
+        String output = clean_name.substring(0, 1).toUpperCase() + clean_name.substring(1);
+        return output;
+    }
 }

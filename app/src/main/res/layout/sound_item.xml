@@ -30,12 +30,11 @@
                 android:id="@+id/soundName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_rect_list_normal"
                 android:clickable="false"
                 android:gravity="center_vertical"
                 android:paddingLeft="10dp"
                 android:textColor="@color/text"
-                android:textSize="14sp" />
+                android:textSize="18sp" />
 
             <SeekBar
                 android:layout_width="match_parent"

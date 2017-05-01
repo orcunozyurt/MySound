@@ -20,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
 
+import com.nerdzlab.mysound.Adapters.MySection;
 import com.nerdzlab.mysound.Adapters.SoundInterface;
 import com.nerdzlab.mysound.Adapters.SoundsRecyclerAdapter;
 import com.nerdzlab.mysound.Models.SoundResource;
@@ -29,11 +30,13 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, SoundInterface {
 
     private static final String TAG = "MainActivity";
-    private ArrayList<SoundResource> data;
+    private HashMap<String, ArrayList<SoundResource>> data;
     private RelativeLayout contentMain;
     private RecyclerView soundrecycler;
     protected RecyclerView.LayoutManager mLayoutManager;
@@ -83,7 +86,7 @@ public class MainActivity extends AppCompatActivity
         contentMain = (RelativeLayout) findViewById(R.id.content_main);
         soundrecycler = (RecyclerView) findViewById(R.id.soundrecycler);
 
-        data = new ArrayList<SoundResource>();
+        data = new HashMap<String, ArrayList<SoundResource>>();
         data = loadDrawables(R.raw.class);
 
         Log.d(TAG, "onCreate: "+data);
@@ -91,9 +94,23 @@ public class MainActivity extends AppCompatActivity
         mLayoutManager = new LinearLayoutManager(this);
         soundrecycler.setLayoutManager(mLayoutManager);
 
-        mAdapter = new SoundsRecyclerAdapter(data, this);
+        //mAdapter = new SoundsRecyclerAdapter(data, this);
 
-        soundrecycler.setAdapter(mAdapter);
+        //soundrecycler.setAdapter(mAdapter);
+
+        // Create an instance of SectionedRecyclerViewAdapter
+        SectionedRecyclerViewAdapter sectionAdapter = new SectionedRecyclerViewAdapter();
+
+        // Add your Sections
+        for (String key : data.keySet()) {
+            sectionAdapter.addSection(new MySection(key,data.get(key),this,sectionAdapter));
+        }
+
+
+        // Set up your RecyclerView with the SectionedRecyclerViewAdapter
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.soundrecycler);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(sectionAdapter);
 
         AudioAttributes audioAttrib = new AudioAttributes.Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
@@ -179,16 +196,27 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    public static ArrayList<SoundResource> loadDrawables(Class<?> clz){
+    public static HashMap<String,ArrayList<SoundResource>> loadDrawables(Class<?> clz){
         final Field[] fields = clz.getDeclaredFields();
-        ArrayList<SoundResource> resources = new ArrayList<SoundResource>();
+        //ArrayList<SoundResource> resources = new ArrayList<SoundResource>();
+        HashMap<String, ArrayList<SoundResource>> resources = new HashMap<>();
         for (Field field : fields) {
             SoundResource sr = new SoundResource();
             try {
                 sr.setResource_id(field.getInt(clz));
                 sr.setResource_name(field.getName());
 
-                resources.add(sr);
+                //resources.add(sr);
+                if(resources.containsKey(sr.getSectionName()))
+                {
+                    resources.get(sr.getSectionName()).add(sr);
+                }
+                else
+                {
+                    ArrayList<SoundResource> arr = new ArrayList<>();
+                    arr.add(sr);
+                    resources.put(sr.getSectionName(),arr);
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
