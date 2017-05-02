@@ -59,6 +59,58 @@ public class MySection extends StatelessSection {
         // bind your view here
         itemHolder.soundName.setText(item.getCleanName());
 
+        switch (item.getResource_id()){
+
+            case R.raw.asmr_crinkling:
+                itemHolder.soundicon.setImageResource(R.drawable.ic_crinkling);
+                break;
+            case R.raw.asmr_hair_brushing:
+                itemHolder.soundicon.setImageResource(R.drawable.ic_action_name);
+                break;
+            case R.raw.asmr_handcuffs:
+                itemHolder.soundicon.setImageResource(R.drawable.ic_handcuffs);
+                break;
+            case R.raw.asmr_keyboard:
+                itemHolder.soundicon.setImageResource(R.drawable.ic_keyboard);
+                break;
+            case R.raw.asmr_nail_scrubber_brush:
+                itemHolder.soundicon.setImageResource(R.drawable.ic_nailscrub);
+                break;
+            case R.raw.melodic_mysterious_event:
+                itemHolder.soundicon.setImageResource(R.drawable.ic_mysterious);
+                break;
+            case R.raw.nature_lightning:
+                itemHolder.soundicon.setImageResource(R.drawable.ic_lightning);
+                break;
+            case R.raw.nature_thunder_storm:
+                itemHolder.soundicon.setImageResource(R.drawable.ic_thunderstorm);
+                break;
+            case R.raw.nature_water_stream:
+                itemHolder.soundicon.setImageResource(R.drawable.ic_waterstream);
+                break;
+            case R.raw.nature_waves:
+                itemHolder.soundicon.setImageResource(R.drawable.ic_seawaves);
+                break;
+            case R.raw.nature_windy:
+                itemHolder.soundicon.setImageResource(R.drawable.ic_windy);
+                break;
+            case R.raw.nature_woodpecker_and_birds:
+                itemHolder.soundicon.setImageResource(R.drawable.ic_birds);
+                break;
+            case R.raw.war_jet_fighter:
+                itemHolder.soundicon.setImageResource(R.drawable.ic_jetfighter);
+                break;
+            case R.raw.war_submarine:
+                itemHolder.soundicon.setImageResource(R.drawable.ic_submarine);
+                break;
+            case R.raw.war_war_ambience:
+                itemHolder.soundicon.setImageResource(R.drawable.ic_warambiance);
+                break;
+            default:
+                itemHolder.soundicon.setImageResource(R.drawable.ic_default);
+                break;
+        }
+
 
         itemHolder.volumebar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override

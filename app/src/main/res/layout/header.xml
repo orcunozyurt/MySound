@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?selectableItemBackground"
-    android:padding="@dimen/activity_horizontal_margin">
+    android:padding="10dp">
 
     <TextView
         android:id="@+id/title"
@@ -18,7 +18,7 @@
         android:layout_toStartOf="@+id/caret"
         android:fontFamily="sans-serif-medium"
         android:textColor="@color/colorAccent"
-        android:textSize="22sp"
+        android:textSize="16sp"
         tools:ignore="UnusedAttribute"
         tools:text=""/>
 
@@ -31,6 +31,7 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:src="@drawable/ic_arrow_upwards"
         />
 
 </RelativeLayout>
