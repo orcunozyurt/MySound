@@ -1,8 +1,10 @@
 package com.nerdzlab.mysound;
 
+import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,6 +22,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
 
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.nerdzlab.mysound.Adapters.MySection;
 import com.nerdzlab.mysound.Adapters.SoundInterface;
 import com.nerdzlab.mysound.Adapters.SoundsRecyclerAdapter;
@@ -177,17 +181,34 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.nav_fb) {
+            /*Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, "http://www.google.com");
+            startActivity(Intent.createChooser(sharingIntent, "Share via"));*/
+            ShareLinkContent content = new ShareLinkContent.Builder()
+                    .setContentUrl(Uri.parse(getResources().getString(R.string.google_play_url)))
+                    .build();
+            ShareDialog shareDialog = new ShareDialog(this);
+            shareDialog.show(content, ShareDialog.Mode.AUTOMATIC);
+        } else if (id == R.id.nav_tw) {
+            Intent tweet = new Intent(Intent.ACTION_VIEW);
+            tweet.setData(Uri.parse("http://twitter.com/?status=" +
+                    Uri.encode(getResources().getString(R.string.google_play_url))));
+            startActivity(tweet);
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.nav_github) {
 
-        } else if (id == R.id.nav_manage) {
+            Intent tweet = new Intent(Intent.ACTION_VIEW);
+            tweet.setData(Uri.parse("https://github.com/orcunozyurt/MySound"));//where message is your string message
+            startActivity(tweet);
 
-        } else if (id == R.id.nav_share) {
+        }else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            sharingIntent.putExtra(Intent.EXTRA_TEXT, Uri.parse(getResources().getString(R.string.google_play_url)));
+            startActivity(Intent.createChooser(sharingIntent, "Share via"));
 
         }
 
