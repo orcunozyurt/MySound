@@ -67,14 +67,14 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-        });
+        });*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -153,14 +153,14 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
+    /*@Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
-    }
+    }*/
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -173,7 +173,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -192,10 +192,14 @@ public class MainActivity extends AppCompatActivity
             ShareDialog shareDialog = new ShareDialog(this);
             shareDialog.show(content, ShareDialog.Mode.AUTOMATIC);
         } else if (id == R.id.nav_tw) {
-            Intent tweet = new Intent(Intent.ACTION_VIEW);
+            /*Intent tweet = new Intent(Intent.ACTION_VIEW);
             tweet.setData(Uri.parse("http://twitter.com/?status=" +
                     Uri.encode(getResources().getString(R.string.google_play_url))));
-            startActivity(tweet);
+            startActivity(tweet);*/
+            Intent tweet = new Intent(android.content.Intent.ACTION_SEND);
+            tweet.setType("text/plain");
+            tweet.putExtra(Intent.EXTRA_TEXT, Uri.parse(getResources().getString(R.string.google_play_url)).toString());
+            startActivity(Intent.createChooser(tweet, "Share this via"));
 
         } else if (id == R.id.nav_github) {
 

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MySound</string>
+    <string name="app_name">SoundPool</string>
     <string name="facebook_app_id">293077331135351</string>
     <string name="google_play_url">https://play.google.com/store/apps/details?id=com.nerdzlab.mysound</string>
 
