@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.nerdzlab.mysound.MainActivity;
 import com.nerdzlab.mysound.Models.SoundResource;
 import com.nerdzlab.mysound.R;
 
@@ -51,7 +52,7 @@ public class MySection extends StatelessSection {
     }
 
     @Override
-    public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindItemViewHolder(RecyclerView.ViewHolder holder, final int position) {
 
         MyItemViewHolder itemHolder = (MyItemViewHolder) holder;
         final SoundResource item = myList.get(position);
@@ -59,7 +60,7 @@ public class MySection extends StatelessSection {
         // bind your view here
         itemHolder.soundName.setText(item.getCleanName());
 
-        switch (item.getResource_id()){
+        switch ((int)item.getResource_id()){
 
             case R.raw.asmr_crinkling:
                 itemHolder.soundicon.setImageResource(R.drawable.ic_crinkling);
@@ -111,15 +112,19 @@ public class MySection extends StatelessSection {
                 break;
         }
 
+        int vol = Math.round(MainActivity.volumeMap.get(item.getResource_id()));
+        Log.d(TAG, "onBindItemViewHolder: " + vol + " " + item.getCleanName());
+
 
         itemHolder.volumebar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
 
-                Log.d(TAG, "onProgressChanged: "+i);
+                //Log.d(TAG, "onProgressChanged: "+i);
                 if(mContext instanceof SoundInterface){
-                    Log.d(TAG, "onClick: instance of CI");
+
                     ((SoundInterface)mContext).soundLevelChanged(item.getResource_id(),i);
+
                 }
             }
 
@@ -136,6 +141,8 @@ public class MySection extends StatelessSection {
             }
         });
     }
+
+
 
     @Override
     public RecyclerView.ViewHolder getHeaderViewHolder(View view) {

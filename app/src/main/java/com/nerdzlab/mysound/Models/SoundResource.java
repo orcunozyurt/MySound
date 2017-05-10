@@ -6,14 +6,16 @@ package com.nerdzlab.mysound.Models;
 
 public class SoundResource {
 
-    private int resource_id;
+    private long resource_id;
     private String resource_name;
     private int icon_id;
+    private float resource_volume;
 
-    public SoundResource(int resource_id, String resource_name, int icon_id) {
+    public SoundResource(int resource_id, String resource_name, int icon_id, float resource_volume) {
         this.resource_id = resource_id;
         this.resource_name = resource_name;
         this.icon_id = icon_id;
+        this.resource_volume = resource_volume;
     }
 
     public SoundResource() {
@@ -24,6 +26,8 @@ public class SoundResource {
         return "SoundResource{" +
                 "resource_id=" + resource_id +
                 ", resource_name='" + resource_name + '\'' +
+                ", icon_id=" + icon_id +
+                ", resource_volume=" + resource_volume +
                 '}';
     }
 
@@ -35,11 +39,11 @@ public class SoundResource {
         this.resource_name = resource_name;
     }
 
-    public int getResource_id() {
+    public long getResource_id() {
         return resource_id;
     }
 
-    public void setResource_id(int resource_id) {
+    public void setResource_id(long resource_id) {
         this.resource_id = resource_id;
     }
 
@@ -75,5 +79,13 @@ public class SoundResource {
 
         String output = clean_name.substring(0, 1).toUpperCase() + clean_name.substring(1);
         return output;
+    }
+
+    public float getResource_volume() {
+        return resource_volume;
+    }
+
+    public void setResource_volume(float resource_volume) {
+        this.resource_volume = resource_volume;
     }
 }

@@ -6,5 +6,5 @@ package com.nerdzlab.mysound.Adapters;
 
 public interface SoundInterface {
 
-    void soundLevelChanged (int res_id, int percent);
+    void soundLevelChanged (long res_id, int percent);
 }

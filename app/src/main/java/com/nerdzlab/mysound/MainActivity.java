@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity
     protected RecyclerView.LayoutManager mLayoutManager;
     protected SoundsRecyclerAdapter mAdapter;
     private SoundPool soundPool;
+    public static HashMap< Long , Float > volumeMap = new HashMap<>();
 
     private AudioManager audioManager;
 
@@ -228,9 +229,13 @@ public class MainActivity extends AppCompatActivity
         for (Field field : fields) {
             SoundResource sr = new SoundResource();
             try {
+                Log.d(TAG, "loadDrawables: "+field.getLong(clz) + " "+ field.getName());
                 sr.setResource_id(field.getInt(clz));
                 sr.setResource_name(field.getName());
+                sr.setResource_volume(0);
 
+
+                volumeMap.put(sr.getResource_id(),0f);
                 //resources.add(sr);
                 if(resources.containsKey(sr.getSectionName()))
                 {
@@ -244,6 +249,7 @@ public class MainActivity extends AppCompatActivity
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+                Log.d(TAG, "loadDrawables: EXCEPTION on:"+ field.getName());
             }
         /* make use of drawableId for accessing Drawables here */
         }
@@ -252,9 +258,9 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void soundLevelChanged(int res_id, int percent) {
+    public void soundLevelChanged(long res_id, int percent) {
 
-        Log.d(TAG, "soundLevelChanged: "+" RES ID: "+res_id + " percent: "+ percent);
+        //Log.d(TAG, "soundLevelChanged: "+" RES ID: "+res_id + " percent: "+ percent);
 
         if(playingMap.containsKey(res_id))
         {
@@ -264,6 +270,7 @@ public class MainActivity extends AppCompatActivity
                 try {
                     soundPool.stop((Integer) playingMap.get(res_id));
                     playingMap.remove(res_id);
+                    volumeMap.put(res_id,0f);
                 }catch (Exception e)
                 {
                     e.printStackTrace();
@@ -271,8 +278,10 @@ public class MainActivity extends AppCompatActivity
             }else{
 
                 try{
-                    Log.d(TAG, "soundLevelChanged: SET SOUND LEVEL TO:"+percent/100f);
+                    //Log.d(TAG, "soundLevelChanged: SET SOUND LEVEL TO:"+percent/100f);
                     soundPool.setVolume((Integer) playingMap.get(res_id),percent/100f,percent/100f);
+                    volumeMap.put(res_id,percent/100f);
+
                 }catch (Exception e)
                 {
                     e.printStackTrace();
@@ -282,9 +291,11 @@ public class MainActivity extends AppCompatActivity
         }else
         {
             Log.d(TAG, "soundLevelChanged: playingMAp NOT contains:"+ res_id +" in "+ playingMap);
-            int sample = this.soundPool.load(this, res_id, 1 );
+            int sample = this.soundPool.load(this, (int)res_id, 1 );
             Volume = percent/100;
             playingMap.put(res_id,sample);
+            volumeMap.put(res_id, percent/100f);
+
         }
 
 
