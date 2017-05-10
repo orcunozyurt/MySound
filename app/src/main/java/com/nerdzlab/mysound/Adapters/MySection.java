@@ -112,8 +112,9 @@ public class MySection extends StatelessSection {
                 break;
         }
 
-        int vol = Math.round(MainActivity.volumeMap.get(item.getResource_id()));
-        Log.d(TAG, "onBindItemViewHolder: " + vol + " " + item.getCleanName());
+        float vol = MainActivity.volumeMap.get(item.getResource_id());
+        Log.d(TAG, "onBindItemViewHolder: Volume: " + vol + " " + item.getCleanName());
+        itemHolder.volumebar.setProgress(Math.round(vol*100));
 
 
         itemHolder.volumebar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -121,7 +122,7 @@ public class MySection extends StatelessSection {
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
 
                 //Log.d(TAG, "onProgressChanged: "+i);
-                if(mContext instanceof SoundInterface){
+                if(mContext instanceof SoundInterface && b){
 
                     ((SoundInterface)mContext).soundLevelChanged(item.getResource_id(),i);
 
